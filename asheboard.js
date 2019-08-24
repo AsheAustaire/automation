@@ -1,5 +1,6 @@
 const { readdirSync } = require('fs')
 const readline = require('readline');
+const EXEC = require('child_process').execSync
 
 const rl = readline.createInterface({
   input: process.stdin,
