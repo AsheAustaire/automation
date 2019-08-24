@@ -12,3 +12,13 @@ This movement away from roboticism requires some planning. I intend to use my sk
 How . . . 
 
 • I'll build a dashboard to quickly access commonly used configurations. 
+
+Technical Implementation . . . 
+
+Environments are an organizational tool for workflows. 
+
+Workflows are directories which contain an all necessary automation for a specific task.
+
+Asheboard script scans the ./workflows directory for all workflows.
+/.workflows contains workflow directories which must have a json config file.
+/.components contain common workflows
