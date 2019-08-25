@@ -56,6 +56,9 @@ function options() {
   console.log('Please choose from the following options by entering the associated number');
   let itemMap = displayDirectoriesInList(SCRIPTPATH)
   rl.on('line', (line) => {
+    if(isNaN(line) || line === ''){
+      console.log(`I'm expecting a number, please try again!`)
+    } else {
     let selection = itemMap.filter((obj) => {
       return obj.id === parseInt(line)
     })
@@ -63,6 +66,8 @@ function options() {
     executeTerminalCommand(`/usr/bin/automator ~/.../asheboard/workflows/${selection.directoryName}/${selection.workflowName}`)
     console.log(`You've just launched ${selection.directoryName}`)
     rl.close()
+    }
+
   })
 }
 
