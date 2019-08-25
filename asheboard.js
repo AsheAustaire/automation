@@ -2,7 +2,7 @@ const { readdirSync } = require('fs')
 const readline = require('readline');
 const EXEC = require('child_process').execSync
 
-const SCRIPTPATH = './workflows'
+const SCRIPTPATH = '/Users/dotdotwork/.../asheboard'
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -47,7 +47,6 @@ function checkForNamingErrors(){
   const workflowNames = getWorkflowNames(SCRIPTPATH, directoryNames) 
   directoryNames.forEach((directoryName) => {
     if(!workflowNames.includes(directoryName)) {
-      console.log(directoryName, workflowNames.includes(directoryName))
       throw `${directoryName} workflow and folder need to be the same name`
     }
   })
@@ -56,7 +55,6 @@ function checkForNamingErrors(){
 function options() {
   console.log('Please choose from the following options by entering the associated number');
   let itemMap = displayDirectoriesInList(SCRIPTPATH)
-  rl.prompt();
   rl.on('line', (line) => {
     let selection = itemMap.filter((obj) => {
       return obj.id === parseInt(line)
@@ -87,7 +85,7 @@ function options() {
 
 
 function getDirectoryNames(path) {
-  return readdirSync(path, { withFileTypes: true })
+  return readdirSync(`${path}/workflows`, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
   .map(dirent => `${dirent.name}`)
 } 
@@ -95,7 +93,7 @@ function getDirectoryNames(path) {
 //This function, sucks.
 function getWorkflowNames(path, directoryNames) {
   let workFlowNames = directoryNames.map((directoryName) => {
-    return readdirSync(`${path}/${directoryName}`) 
+    return readdirSync(`${path}/workflows/${directoryName}`) 
   }).map((fileArray) => {
     return fileArray.filter((fileName, i) => {
       if (fileName.includes('workflow')){
