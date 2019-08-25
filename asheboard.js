@@ -2,6 +2,8 @@ const { readdirSync } = require('fs')
 const readline = require('readline');
 const EXEC = require('child_process').execSync
 
+const SCRIPTPATH = './workflows'
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -41,8 +43,8 @@ function welcome() {
 }
 
 function checkForNamingErrors(){
-  const directoryNames = getDirectoryNames('./workflows')
-  const workflowNames = getWorkflowNames('./workflows', directoryNames) 
+  const directoryNames = getDirectoryNames(SCRIPTPATH)
+  const workflowNames = getWorkflowNames(SCRIPTPATH, directoryNames) 
   directoryNames.forEach((directoryName) => {
     if(!workflowNames.includes(directoryName)) {
       console.log(directoryName, workflowNames.includes(directoryName))
@@ -53,7 +55,7 @@ function checkForNamingErrors(){
 
 function options() {
   console.log('Please choose from the following options by entering the associated number');
-  let itemMap = displayDirectoriesInList('./workflows')
+  let itemMap = displayDirectoriesInList(SCRIPTPATH)
   rl.prompt();
   rl.on('line', (line) => {
     let selection = itemMap.filter((obj) => {
