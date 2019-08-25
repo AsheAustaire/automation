@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 function main() {
   welcome();
   checkForNamingErrors();
-  // options();
+  options();
 }
 
 
@@ -41,8 +41,14 @@ function welcome() {
 }
 
 function checkForNamingErrors(){
-  const directoryName = getDirectoriesNames('./workflows')
-  const workflowName = getWorkflowNames('./workflows', directoryName) 
+  const directoryNames = getDirectoryNames('./workflows')
+  const workflowNames = getWorkflowNames('./workflows', directoryNames) 
+  directoryNames.forEach((directoryName) => {
+    if(!workflowNames.includes(directoryName)) {
+      console.log(directoryName, workflowNames.includes(directoryName))
+      throw `${directoryName} workflow and folder need to be the same name`
+    }
+  })
 }
 
 function options() {
@@ -54,7 +60,8 @@ function options() {
       return obj.id === parseInt(line)
     })
     selection = selection[0];
-    // executeTerminalCommand(`/usr/bin/automator ~/.../asheboard/workflows/${selection.directoryName}/${selection.workflow}`)
+    executeTerminalCommand(`/usr/bin/automator ~/.../asheboard/workflows/${selection.directoryName}/${selection.workflowName}`)
+    console.log(`You've just launched ${selection.directoryName}`)
     rl.close()
   })
 }
@@ -77,30 +84,44 @@ function options() {
 
 
 
-function getDirectoriesNames(path) {
+function getDirectoryNames(path) {
   return readdirSync(path, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
   .map(dirent => `${dirent.name}`)
 } 
 
-
-function getWorkflowNames(path, directoryName) {
-  directoryName.forEach((directoryName) => {
-    readdirSync(`${path}/${directoryName}`) 
-    //filter based off directory name
-    console.log(readdirSync(`${path}/${directoryName}`))
+//This function, sucks.
+function getWorkflowNames(path, directoryNames) {
+  let workFlowNames = directoryNames.map((directoryName) => {
+    return readdirSync(`${path}/${directoryName}`) 
+  }).map((fileArray) => {
+    return fileArray.filter((fileName, i) => {
+      if (fileName.includes('workflow')){
+        return fileArray[i]
+      } 
+    })
+  }).map((workflowArray) => {
+    return workflowArray[0]
   })
+  if(workFlowNames.includes(undefined)) {
+    throw 'One of your workflows is missing a workflow file'
+  }
+  workFlowNames = workFlowNames.map((string) => {
+    return string.replace('.workflow', '')
+  })
+  return workFlowNames
 } 
 
+// TECH DEBT - WEIRD THING WITH THE INDEX
+// Should have SOT for directory names
 function displayDirectoriesInList(path) {
-  let directoryNameArray = getDirectoriesNames(path);
-  console.log(workflowNameArray)
-  return directoryNameArray.map((name, i) => {
-    console.log(`${i}: ${directoryName}`)
+  let directoryNameArray = getDirectoryNames(path);
+  return directoryNameArray.map((directoryName, i) => {
+    console.log(`${i + 1}: ${directoryName}`)
     return {
       'directoryName': directoryName,
-      'id': i,
-      'workflowName': ``
+      'id': i + 1,
+      'workflowName': `${directoryName}.workflow`
     }
   })
 }
