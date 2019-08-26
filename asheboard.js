@@ -54,20 +54,25 @@ function checkForNamingErrors(){
 
 function options() {
   console.log('Please choose from the following options by entering the associated number');
+  console.log('0: HARD RESET')
   let itemMap = displayDirectoriesInList(SCRIPTPATH)
   rl.on('line', (line) => {
     if(isNaN(line) || line === ''){
       console.log(`I'm expecting a number, please try again!`)
     } else {
-    let selection = itemMap.filter((obj) => {
-      return obj.id === parseInt(line)
-    })
-    selection = selection[0];
-    executeTerminalCommand(`/usr/bin/automator ~/.../asheboard/workflows/${selection.directoryName}/${selection.workflowName}`)
-    console.log(`You've just launched ${selection.directoryName}`)
+    if(line === '0') {
+      executeTerminalCommand(`killall -u ashe`) 
+    } else {
+      let selection = itemMap.filter((obj) => {
+        return obj.id === parseInt(line)
+      })
+      selection = selection[0];
+      
+      executeTerminalCommand(`/usr/bin/automator ~/.../asheboard/workflows/${selection.directoryName}/${selection.workflowName}`)
+      console.log(`You've just launched ${selection.directoryName}`)
+    }
     rl.close()
     }
-
   })
 }
 

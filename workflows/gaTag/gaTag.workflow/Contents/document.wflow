@@ -221,8 +221,7 @@ code ~/Desktop/email/gaTags/gaTagClone.html</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>tell application "Google Chrome"	open location "https://evenfinancial.atlassian.net/wiki/spaces/MKT/pages/176095918/Google+Analytics"	open location "https://ga-dev-tools.appspot.com/hit-builder/"	open location "https://app.asana.com/0/923942170501504/1123862214803983"
-	open location "https://drive.google.com/drive/folders/1-B2F2WogMSEM2o0u6LCGrMrWteOdQTUr"	end tell</string>
+					<string>tell application "Google Chrome"	open location "https://evenfinancial.atlassian.net/wiki/spaces/MKT/pages/176095918/Google+Analytics"	open location "https://ga-dev-tools.appspot.com/hit-builder/"	open location "https://app.asana.com/0/923942170501504/1123862214803983"	open location "https://drive.google.com/drive/folders/1-B2F2WogMSEM2o0u6LCGrMrWteOdQTUr"	end tell</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -286,7 +285,7 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>18E82CBC-687F-4004-A64E-E87D3CC33581</key>
+		<key>BFE3494F-A553-4D9F-B5E4-E5534E4815D1</key>
 		<dict>
 			<key>from</key>
 			<string>185FF5CB-6CB7-4C77-BC79-AE4BADA93984 - 185FF5CB-6CB7-4C77-BC79-AE4BADA93984</string>
